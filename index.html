@@ -50,22 +50,34 @@
       <textarea name="res" id="res" cols="30" rows="10" class="mb-1" readonly></textarea>
       <p id="count">0 words</p>
       <button onclick="copy()" id="copy">Copy</button>
-      <button onclick="trans('d')">DeepL</button>
-      <button onclick="trans('g')">Google Translation</button>
+      <button onclick="trans('d')" id="trans-d">DeepL</button>
+      <button onclick="trans('g')" id="trans-g">Google Translation</button>
     </div>
   </div>
   <hr>
   <span>2021 murasan</span>
   <script>
     'use strict';
+
     var input_text = document.getElementById('text');
     var output_text = document.getElementById('res');
     var count = document.getElementById('count');
+
+    var copy_btn = document.getElementById('copy');
+    var trans_d_btn = document.getElementById('trans-d');
+    var trans_g_btn = document.getElementById('trans-g');
+
     function clicked(){      
       const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', '');
       output_text.value = result;
       
       count.innerText = result.length + ' words';
+      if(result.length > 5000){
+        window.alert('Over limit!');
+        copy_btn.disabled = true;
+        trans_d_btn.disabled = true;
+        trans_g_btn.disabled = true;
+      }
     }
     function copy(){
       output_text.select();
@@ -74,6 +86,10 @@
     function clearText(){
       input_text.value = '';
       output_text.value = '';
+
+      copy_btn.disabled = false;
+      trans_d_btn.disabled = false;
+      trans_g_btn.disabled = false;
 
       count.innerText = '0 words';
     }
