@@ -60,7 +60,7 @@
     var output_text = document.getElementById('res');
     var count = document.getElementById('count');
     function clicked(){      
-      const result = input_text.value.trim().replaceAll('\n', '');
+      const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', '');
       output_text.value = result;
       
       count.innerText = result.length + ' words';
