@@ -50,6 +50,8 @@
       <textarea name="res" id="res" cols="30" rows="10" class="mb-1" readonly></textarea>
       <p id="count">0 words</p>
       <button onclick="copy()" id="copy">Copy</button>
+      <button onclick="trans('d')">DeepL</button>
+      <button onclick="trans('g')">Google Translation</button>
     </div>
   </div>
   <hr>
@@ -74,6 +76,15 @@
       output_text.value = '';
 
       count.innerText = '0 words';
+    }
+    function trans(s){
+      if(s == "d"){
+        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.value;
+        window.open(url, '_blank');
+      } else if( s == "g"){
+        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.value;
+        window.open(url, '_blank');
+      }
     }
   </script>
 </body>
