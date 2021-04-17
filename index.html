@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Format</title>
+  <style>
+    hr{
+      border-top: 1px dashed #000;
+      margin: 2rem 0;
+      width: 100%;
+    }
+    .flex{
+      display: flex;
+    }
+    .flex-col{
+      flex-direction: column;
+    }
+    .flex-row{
+      flex-direction: row;
+    }
+    .m-auto{
+      margin: auto;
+    }
+    .mb-1{
+      margin-bottom: 1rem;
+    }
+    .mb-2{
+      margin-bottom: 2rem;
+    }
+    .w-1_2{
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="mb-1">Format</h1>
+  <button onclick="clearText()" id="clearText">Clear all</button>
+  <hr>
+  <div class="flex flex-col w-1_2 m-auto">
+    <div class="flex flex-col">
+      <h2>Input</h2>
+      <textarea name="text" id="text" cols="30" rows="10" class="mb-1" autofocus></textarea>
+      <button onclick="clicked()" id="format">Format</button>
+    </div>
+    <hr>
+    <div class="flex flex-col">
+      <h2>Result</h2>
+      <textarea name="res" id="res" cols="30" rows="10" class="mb-1" readonly></textarea>
+      <p id="count">0 words</p>
+      <button onclick="copy()" id="copy">Copy</button>
+    </div>
+  </div>
+  <hr>
+  <span>2021 murasan</span>
+  <script>
+    'use strict';
+    var input_text = document.getElementById('text');
+    var output_text = document.getElementById('res');
+    var count = document.getElementById('count');
+    function clicked(){      
+      const result = input_text.value.trim().replaceAll('\n', '');
+      output_text.value = result;
+      
+      count.innerText = result.length + ' words';
+    }
+    function copy(){
+      output_text.select();
+      document.execCommand('copy');
+    }
+    function clearText(){
+      input_text.value = '';
+      output_text.value = '';
+
+      count.innerText = '0 words';
+    }
+  </script>
+</body>
+</html>
