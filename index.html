@@ -68,7 +68,7 @@
     var trans_g_btn = document.getElementById('trans-g');
 
     function clicked(){      
-      const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', '');
+      const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', ' ');
       output_text.value = result;
       
       count.innerText = result.length + ' words';
