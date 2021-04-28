@@ -5,68 +5,48 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Format</title>
-  <style>
-    hr{
-      border-top: 1px dashed #000;
-      margin: 2rem 0;
-      width: 100%;
-    }
-    .flex{
-      display: flex;
-    }
-    .flex-col{
-      flex-direction: column;
-    }
-    .flex-row{
-      flex-direction: row;
-    }
-    .m-auto{
-      margin: auto;
-    }
-    .mr-1{
-      margin-right: 1rem;
-    }
-    .mb-1{
-      margin-bottom: 1rem;
-    }
-    .mb-2{
-      margin-bottom: 2rem;
-    }
-    .w-1_2{
-      width: 50%;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <h1 class="mb-1">Format</h1>
-  <p>PDFなどからテキストをコピーすると余分な空白が発生することがあります。その余白を除去し、そのまま翻訳サイトで「英語から日本語」に翻訳できます。</p>
-  <p>DeepLとGoogle Translationへテキストが貼り付けられた状態で遷移します。</p>
-  <p>翻訳サイト先の文字数制限に引っかかることがあります。2000字以上でDeepLが正常に利用できない場合があります。DeepLの最大文字数は5000字です。</p>
-  <div class="flex flex-row">
-    <button onclick="clearText()" class="mr-1" id="clearText">Clear All</button>
-    <button onclick="paste()" id="paste">Paste</button>
-  </div>  
-  <hr>
-  <div class="flex flex-col w-1_2 m-auto">
-    <div class="flex flex-col">
-      <h2>Input</h2>
-      <textarea name="text" id="text" cols="30" rows="10" class="mb-1" autofocus></textarea>
-      <button onclick="clicked()" id="format">Format</button>
+  <div class="px-3 md:px-0 container mx-auto mb-5">
+    <h1 class="text-5xl">Format</h1>
+    <div class="my-2">
+      <p>PDFなどからテキストをコピーすると余分な空白が発生することがあります。その余白を除去し、そのまま翻訳サイト(DeepL/Google Translation)で「英語から日本語」に翻訳できます。</p>
+      <p class="text-sm text-gray-500">※翻訳サイト先の文字数制限に引っかかることがあります。2000字以上でDeepLが正常に利用できない場合があります。DeepLの最大文字数は5000字です。</p>
     </div>
-    <hr>
-    <div class="flex flex-col">
-      <h2>Result</h2>
-      <span id="res" class="mb-1"></span>
-      <p id="count">0 words</p>
-      <div class="flex flex-row">
-        <button onclick="copy()" class="mr-1" id="copy">Copy</button>
-        <button onclick="trans('d')" class="mr-1" id="trans-d">DeepL</button>
-        <button onclick="trans('g')" id="trans-g">Google Translation</button>
-      </div>      
+    <hr> 
+    <div class="my-2">
+      <button onclick="paste()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50" id="paste">クリップボードから貼り付け</button>
+      <div class="flex flex-col text-sm text-gray-500">
+        <p>※クリップボードからテキストを取得するにはアクセス許可が必要です。当サイトではテキスト貼り付け以外の用途には使用していません。</p>
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-col">
+        <h2 class="text-2xl mb-2">Input</h2>
+        <textarea name="text" id="text" cols="30" rows="10" class="border border-gray-500 mb-1 resize-none focus:outline-none focus:ring focus:border-blue-300" autofocus></textarea>
+        <div class="flex flex-row">
+          <button onclick="clicked()" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1" id="format">Format</button>
+          <button onclick="clearText()" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1" id="clearText">クリア</button>
+        </div>        
+      </div>
+      <div class="flex flex-col mt-5">
+        <h2 class="text-2xl mb-2">Result</h2>
+        <span id="res" class="border border-gray-500 h-40 w-full mb-1 select-all overflow-y-scroll"></span>
+        <div class="flex flex-col md:flex-row items-center">
+          <p class="md:mr-2" id="count">0 words</p>
+          <div class="flex flex-col md:flex-row">
+            <button onclick="trans('d')" class="bg-indigo-900 text-white font-bold py-2 px-4 rounded mb-2 md:mr-1 md:mb-0" id="trans-d">DeepL</button>
+            <button onclick="trans('g')" class="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-2 md:mr-1 md:mb-0" id="trans-g">Google Translation</button>
+            <button onclick="copy()" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 md:mr-1 md:mb-0" id="copy">コピーする</button>
+          </div>  
+        </div>            
+      </div>
     </div>
   </div>
-  <hr>
-  <span>2021 murasan</span>
+  <div class="p-3 bg-gray-500 text-white">
+    <span>2021 murasan</span>
+  </div>  
   <script>
     'use strict';
 
@@ -119,6 +99,10 @@
         .then(function(t){
           input_text.value = t;
           clicked();
+        })
+        .catch(function(e){
+          window.alert('クリップボードへのアクセスが拒否されています。この機能は利用できません。');
+          document.getElementById('paste').disabled = true;
         })
       }
     }
