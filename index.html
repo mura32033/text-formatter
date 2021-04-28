@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,6 +39,9 @@
 </head>
 <body>
   <h1 class="mb-1">Format</h1>
+  <p>PDFなどからテキストをコピーすると余分な空白が発生することがあります。その余白を除去し、そのまま翻訳サイトで「英語から日本語」に翻訳できます。</p>
+  <p>DeepLとGoogle Translationへテキストが貼り付けられた状態で遷移します。</p>
+  <p>翻訳サイト先の文字数制限に引っかかることがあります。2000字以上でDeepLが正常に利用できない場合があります。DeepLの最大文字数は5000字です。</p>
   <div class="flex flex-row">
     <button onclick="clearText()" class="mr-1" id="clearText">Clear All</button>
     <button onclick="paste()" id="paste">Paste</button>
@@ -53,7 +56,7 @@
     <hr>
     <div class="flex flex-col">
       <h2>Result</h2>
-      <textarea name="res" id="res" cols="30" rows="10" class="mb-1" readonly></textarea>
+      <span id="res" class="mb-1"></span>
       <p id="count">0 words</p>
       <div class="flex flex-row">
         <button onclick="copy()" class="mr-1" id="copy">Copy</button>
@@ -77,14 +80,14 @@
 
     function clicked(){      
       const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', ' ');
-      output_text.value = result;
+      output_text.innerText = result;
       
       count.innerText = result.length + ' words';
+      if(result.length > 2000){
+        window.alert('文字数が多すぎる可能性があります。翻訳サイト先で正常に翻訳できない場合があります。')
+      }
       if(result.length > 5000){
-        window.alert('Over limit!');
-        copy_btn.disabled = true;
-        trans_d_btn.disabled = true;
-        trans_g_btn.disabled = true;
+        window.alert('文字数が多すぎます。翻訳サイト先が利用できない場合があります。');
       }
     }
     function copy(){
@@ -93,7 +96,7 @@
     }
     function clearText(){
       input_text.value = '';
-      output_text.value = '';
+      output_text.innerText = '';
 
       copy_btn.disabled = false;
       trans_d_btn.disabled = false;
@@ -103,10 +106,10 @@
     }
     function trans(s){
       if(s == "d"){
-        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.value;
+        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.innerText;
         window.open(url, '_blank');
       } else if( s == "g"){
-        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.value;
+        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.innerText;
         window.open(url, '_blank');
       }
     }
