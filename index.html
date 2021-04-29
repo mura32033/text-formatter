@@ -32,7 +32,7 @@
       </div>
       <div class="flex flex-col mt-5">
         <h2 class="text-2xl mb-2">Result</h2>
-        <span id="res" class="border border-gray-500 h-40 w-full mb-1 select-all overflow-y-scroll"></span>
+        <textarea name="res" id="res" cols="30" rows="10" class="border border-gray-500 mb-1 resize-none" readonly></textarea>
         <div class="flex flex-col md:flex-row items-center">
           <p class="md:mr-2" id="count">0 words</p>
           <div class="flex flex-col md:flex-row">
@@ -60,14 +60,13 @@
 
     function clicked(){      
       const result = input_text.value.trim().replaceAll(/-\s/g, '').replaceAll(/-\n/g, '').replaceAll('\n', ' ');
-      output_text.innerText = result;
+      output_text.value = result;
       
       count.innerText = result.length + ' words';
-      if(result.length > 2000){
-        window.alert('文字数が多すぎる可能性があります。翻訳サイト先で正常に翻訳できない場合があります。')
-      }
       if(result.length > 5000){
         window.alert('文字数が多すぎます。翻訳サイト先が利用できない場合があります。');
+      } else if(result.length > 2000){
+        window.alert('文字数が多すぎる可能性があります。翻訳サイト先で正常に翻訳できない場合があります。')
       }
     }
     function copy(){
@@ -76,7 +75,7 @@
     }
     function clearText(){
       input_text.value = '';
-      output_text.innerText = '';
+      output_text.value = '';
 
       copy_btn.disabled = false;
       trans_d_btn.disabled = false;
@@ -86,10 +85,10 @@
     }
     function trans(s){
       if(s == "d"){
-        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.innerText;
+        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.value;
         window.open(url, '_blank');
       } else if( s == "g"){
-        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.innerText;
+        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.value;
         window.open(url, '_blank');
       }
     }
