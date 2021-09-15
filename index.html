@@ -85,10 +85,10 @@
     }
     function trans(s){
       if(s == "d"){
-        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.value;
+        const url = 'https://www.deepl.com/translator#en/ja/' + output_text.value.replace(/\//g, '%5C%2F');
         window.open(url, '_blank');
       } else if( s == "g"){
-        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.value;
+        const url = 'https://translate.google.co.jp/?hl=ja&tab=wT&sl=en&tl=ja&text=' + output_text.value.replace(/\//g, '%5C%2F');
         window.open(url, '_blank');
       }
     }
